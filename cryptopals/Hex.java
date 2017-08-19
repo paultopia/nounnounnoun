@@ -28,6 +28,14 @@ public class Hex {
         return hex_str;
     }
 
+    public byte[] getByteArray(){
+        return byte_array;
+    }
+
+    public String getBase64(){
+        return base_64_string;
+    }
+
     public void showoff(){
         System.out.println("\nThe original hex string is:\n\n" + hex_str);
         System.out.println("\nHere it is, converted to a byte array:\n\n" + byte_array_string);
@@ -35,5 +43,19 @@ public class Hex {
         System.out.println("\nHere it is converted to bytes again, but after a run through base 64:\n\n" + base_64_byte_array_string);
         System.out.println("\nAnd here's a base 64 string:\n\n" + base_64_string);
 
+    }
+
+    public String roundTrip(){
+        return DatatypeConverter.printHexBinary(byte_array);
+    }
+
+    public String xor(Hex other){
+        int size = byte_array.length;
+        byte[] result = new byte[size];
+        byte[] other_byte_array = other.getByteArray();
+        for (int i = 0; i < size; i++){
+            result[i] = (byte)(byte_array[i] ^ other_byte_array[i]);
+        } // the cast at the end is necessary because xor apparently promotes to int. see: https://stackoverflow.com/questions/20577609/bitwise-operators-in-java-only-for-integer-and-long 
+        return DatatypeConverter.printHexBinary(result);
     }
 }
