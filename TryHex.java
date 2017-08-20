@@ -20,9 +20,10 @@ public class TryHex{
         String best_text = "";
         String current_text = "";
         Double current_score = 0.0;
+        Scorer scorer = new Scorer();
         for (int i = 0; i < 128; i++){
             current_text = hex.decodeByChar(i);
-            current_score = Scorer.calculateScore(current_text);  // this is inefficient because it builds the hash every time, but I don't care.
+            current_score = scorer.calculateScore(current_text);  
             if (current_score > max_score){
                 max_score = current_score;
                 best_text = current_text;
