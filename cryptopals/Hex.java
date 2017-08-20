@@ -28,6 +28,10 @@ public class Hex {
         return hex_str;
     }
 
+    public String getText(){
+        return decoded_string;
+    }
+
     public byte[] getByteArray(){
         return byte_array;
     }
