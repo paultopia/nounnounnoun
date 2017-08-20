@@ -24,7 +24,22 @@ public class TryHex{
 
     public static void cryptopals4() {
         List<String> lines = Lines.getLines("4.txt");
-        System.out.println(lines.get(0));
+        Double max_score = 0.0;
+        String best_text = "";
+        String current_text = "";
+        Double current_score = 0.0;
+        Scorer scorer = new Scorer(" eothasinrdluymwfgcbpkvjqxz");
+        Hex current_hex;
+        for (String line : lines){
+            current_hex = new Hex(line);
+            current_text = scorer.calculateBestText(current_hex);
+            current_score = scorer.calculateScore(current_text); // inefficient, does 1 extra time per hex.
+            if (current_score > max_score){
+                max_score = current_score;
+                best_text = current_text;
+            }
+        }
+        System.out.println(best_text);
     }
 
     public static void main(String[] args){
