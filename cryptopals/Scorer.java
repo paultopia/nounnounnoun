@@ -2,7 +2,7 @@ package cryptopals;
 import java.util.HashMap;
 
 public class Scorer{
-    private byte[] ranking = " eothasinrdluymwfgcbpkvjqxz".getBytes();
+    private byte[] ranking;
     private HashMap<Integer, Double> points;
 
     private HashMap<Integer, Double> makePointsMap(){
@@ -13,7 +13,8 @@ public class Scorer{
         return result;
     }
 
-    public Scorer(){
+    public Scorer(String rankstring){
+        ranking = rankstring.getBytes();
         points = makePointsMap();
     }
 

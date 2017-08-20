@@ -20,7 +20,7 @@ public class TryHex{
         String best_text = "";
         String current_text = "";
         Double current_score = 0.0;
-        Scorer scorer = new Scorer();
+        Scorer scorer = new Scorer(" eothasinrdluymwfgcbpkvjqxz");
         for (int i = 0; i < 128; i++){
             current_text = hex.decodeByChar(i);
             current_score = scorer.calculateScore(current_text);  
