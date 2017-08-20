@@ -1,5 +1,6 @@
 package cryptopals;
 import java.util.HashMap;
+import cryptopals.Hex;
 
 public class Scorer{
     private byte[] ranking;
@@ -27,5 +28,21 @@ public class Scorer{
             }
         }
         return result;
+    }
+
+    public String calculateBestText(Hex hextext){
+        Double max_score = 0.0;
+        String best_text = "";
+        String current_text = "";
+        Double current_score = 0.0;
+        for (int i = 0; i < 128; i++){
+            current_text = hextext.decodeByChar(i);
+            current_score = calculateScore(current_text);
+            if (current_score > max_score){
+                max_score = current_score;
+                best_text = current_text;
+            }
+        }
+        return best_text;
     }
 }

@@ -16,20 +16,8 @@ public class TryHex{
 
     public static void cryptopals3(){
         Hex hex = new Hex("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736");
-        Double max_score = 0.0;
-        String best_text = "";
-        String current_text = "";
-        Double current_score = 0.0;
         Scorer scorer = new Scorer(" eothasinrdluymwfgcbpkvjqxz");
-        for (int i = 0; i < 128; i++){
-            current_text = hex.decodeByChar(i);
-            current_score = scorer.calculateScore(current_text);  
-            if (current_score > max_score){
-                max_score = current_score;
-                best_text = current_text;
-            }
-        }
-        System.out.println(best_text);
+        System.out.println(scorer.calculateBestText(hex));
     }
 
     public static void main(String[] args){
