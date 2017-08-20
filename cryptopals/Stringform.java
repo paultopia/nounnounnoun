@@ -76,6 +76,6 @@ public class Stringform {
         for (int i = 0; i < size; i++){
             result[i] = (byte)(bytes[i] ^ charbyte);
         }
-        return new String(result);
+        return new Stringform(result);
 	}
 }
