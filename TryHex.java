@@ -13,8 +13,16 @@ public class TryHex{
         System.out.println("cryptopals 2: " + hex1.xor(hex2));
     }
 
+    public static void cryptopals3(){
+        Hex hex = new Hex("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736");
+        for (int i = 0; i < 128; i++){
+            System.out.println(hex.decodeByChar(i));
+        }
+    }
+
     public static void main(String[] args){
-        cryptopals1();
-        cryptopals2();
+        //cryptopals1();
+        //cryptopals2();
+        cryptopals3();
     }
 }

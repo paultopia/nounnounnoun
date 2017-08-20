@@ -58,4 +58,14 @@ public class Hex {
         } // the cast at the end is necessary because xor apparently promotes to int. see: https://stackoverflow.com/questions/20577609/bitwise-operators-in-java-only-for-integer-and-long 
         return DatatypeConverter.printHexBinary(result);
     }
+
+    public String decodeByChar(int charpoint){
+        byte charbyte = (byte) charpoint;
+        int size = byte_array.length;
+        byte[] result = new byte[size];
+        for (int i = 0; i < size; i++){
+            result[i] = (byte)(byte_array[i] ^ charbyte);
+        }
+        return new String(result);
+    }
 }
