@@ -1,5 +1,7 @@
 import cryptopals.Hex;
 import cryptopals.Scorer;
+import cryptopals.Lines;
+import java.util.List;
 
 public class TryHex{
 
@@ -20,9 +22,15 @@ public class TryHex{
         System.out.println(scorer.calculateBestText(hex));
     }
 
+    public static void cryptopals4() {
+        List<String> lines = Lines.getLines("4.txt");
+        System.out.println(lines.get(0));
+    }
+
     public static void main(String[] args){
         //cryptopals1();
         //cryptopals2();
-        cryptopals3();
+        //cryptopals3();
+        cryptopals4();
     }
 }
