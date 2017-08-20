@@ -58,4 +58,24 @@ public class Stringform {
 		}
 		return hex;
 	}
+	
+	public Stringform xor(Stringform other){ // this will need to be branched for case of different lengths.  to handle cryptopals 5, I'll just recycle the smaller one.  but first this new class needs to be tested with existing solved challenges. Then I'll just dispatch uneven cases to a separate function.
+		int size = bytes.length;
+		byte[] result = new byte[size];
+        byte[] other_bytes = other.getBytes();
+        for (int i = 0; i < size; i++){
+            result[i] = (byte)(bytes[i] ^ other_bytes[i]);
+        }
+        return new Stringform(result);
+	}
+	
+	public Stringform xor(int charpoint){
+		byte charbyte = (byte) charpoint;
+        int size = bytes.length;
+        byte[] result = new byte[size];
+        for (int i = 0; i < size; i++){
+            result[i] = (byte)(bytes[i] ^ charbyte);
+        }
+        return new String(result);
+	}
 }
