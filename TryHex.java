@@ -42,10 +42,19 @@ public class TryHex{
         System.out.println(best_text);
     }
 
+    public static void cryptopals5() {
+        String vanilla = "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal";
+        Stringform vtext = new Stringform(vanilla);
+        Stringform key = new Stringform("ICE");
+        Stringform cyphertext = vtext.xor(key);
+        System.out.println(cyphertext.getHex());
+    }
+
     public static void main(String[] args){
-        cryptopals1();
-        cryptopals2();
-        cryptopals3();
-        cryptopals4();
+        //cryptopals1();
+        //cryptopals2();
+        //cryptopals3();
+        //cryptopals4();
+        cryptopals5();
     }
 }
