@@ -46,14 +46,14 @@ public class Stringform {
 	}
 	
 	public String getBase64(){
-		if (base64 = ""){
-			base64 = Base64.getEncoder().encode(bytes);
+		if (base64 == ""){
+        base64 = new String(Base64.getEncoder().encode(bytes));
 		}
 		return base64;
 	}
 	
 	public String getHex(){
-		if (hex = ""){
+		if (hex == ""){
 			hex = DatatypeConverter.printHexBinary(bytes);
 		}
 		return hex;
