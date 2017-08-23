@@ -1,9 +1,7 @@
-import cryptopals.Stringform;
-import cryptopals.Scorer;
-import cryptopals.Lines;
+package cryptopals;
 import java.util.List;
 
-public class TryHex{
+public class SetOne{
 
     public static void cryptopals1(){
         Stringform hex = new Stringform("49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d", "hex"); 
@@ -51,10 +49,10 @@ public class TryHex{
     }
 
     public static void main(String[] args){
-        //cryptopals1();
-        //cryptopals2();
-        //cryptopals3();
-        //cryptopals4();
+        cryptopals1();
+        cryptopals2();
+        cryptopals3();
+        cryptopals4();
         cryptopals5();
     }
 }

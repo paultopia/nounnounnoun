@@ -1,6 +1,5 @@
 package cryptopals;
 import java.util.HashMap;
-import cryptopals.Stringform;
 
 public class Scorer{
     private byte[] ranking;
