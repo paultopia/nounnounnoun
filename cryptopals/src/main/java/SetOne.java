@@ -21,7 +21,7 @@ public class SetOne{
     }
 
     public static void cryptopals4() {
-        List<String> lines = Lines.getLines("4.txt");
+        List<String> lines = Lines.getLines("/4.txt");
         Double max_score = 0.0;
         String best_text = "";
         String current_text = "";
