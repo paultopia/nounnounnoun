@@ -48,11 +48,4 @@ public class SetOne{
         System.out.println(cyphertext.getHex());
     }
 
-    public static void main(String[] args){
-        cryptopals1();
-        cryptopals2();
-        cryptopals3();
-        cryptopals4();
-        cryptopals5();
-    }
 }
