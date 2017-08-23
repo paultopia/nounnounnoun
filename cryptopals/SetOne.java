@@ -47,5 +47,5 @@ public class SetOne{
         Stringform cyphertext = vtext.xor(key);
         System.out.println(cyphertext.getHex());
     }
-
 }
+

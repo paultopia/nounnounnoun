@@ -2,6 +2,7 @@ package cryptopals;
 import javax.xml.bind.DatatypeConverter;
 import java.util.Arrays;
 import java.util.Base64;
+import java.nio.charset.StandardCharsets;
 
 public class Stringform {
 	private String human = "";
@@ -21,7 +22,7 @@ public class Stringform {
 				break;
 			default :
 				human = text;
-				bytes = text.getBytes();
+				bytes = text.getBytes(StandardCharsets.UTF_8);
 		}
 	}
 	
@@ -52,12 +53,16 @@ public class Stringform {
 		return base64;
 	}
 	
-	public String getHex(){
-		if (hex == ""){
-			hex = DatatypeConverter.printHexBinary(bytes);
-		}
-		return hex;
-	}
+    public String getHex(){
+        if (hex == ""){
+            hex = DatatypeConverter.printHexBinary(bytes);
+        }
+        return hex;
+    }
+    
+    public String seeBytes(){
+        return Arrays.toString(bytes);
+    }
 	
 	private Stringform unevenXOR(byte[] other_bytes){ // assumes I want to rotate shorter string around to xor longer one, NOT discard unused bits of longer one (which roughly corresponds to the idea that the plaintext will always be longer than the key).  If this assumption becomes false then I'll have to rewrite this, or perhaps just change what gets called from the public xor method below.
 		byte[] longer;
