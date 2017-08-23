@@ -1,3 +1,5 @@
 *.class
 4.txt
 *.jar
+/build/
+/.gradle/
