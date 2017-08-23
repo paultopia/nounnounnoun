@@ -1,5 +1,5 @@
 *.class
 4.txt
 *.jar
-/build/
-/.gradle/
+cryptopals/build/
+cryptopals/.gradle/
