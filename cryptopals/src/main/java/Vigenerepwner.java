@@ -1,5 +1,25 @@
 package cryptopals;
+import java.util.Arrays;
 
 public class Vigenerepwner {
-    private String placeholder = "";
+
+    public static double testKeysizeSimple(Stringform ciphertext, int keysize){
+        byte[] bytes = ciphertext.getBytes();
+        Stringform first = new Stringform(Arrays.copyOfRange(bytes, 0, keysize));
+        Stringform second = new Stringform (Arrays.copyOfRange(bytes, keysize, keysize * 2));
+        int hamming = first.hammingDistance(second);
+        return ((double)hamming) / keysize;
+    }
+
+    public static double testKeysizeFancy(Stringform ciphertext, int keysize){
+        byte[] bytes = ciphertext.getBytes();
+        Stringform first = new Stringform(Arrays.copyOfRange(bytes, 0, keysize));
+        Stringform second = new Stringform (Arrays.copyOfRange(bytes, keysize, keysize * 2));
+        Stringform third = new Stringform(Arrays.copyOfRange(bytes, keysize * 2, keysize * 3));
+        Stringform fourth = new Stringform (Arrays.copyOfRange(bytes, keysize * 3, keysize * 4));
+        int hamming1 = first.hammingDistance(second);
+        int hamming2 = third.hammingDistance(fourth);
+        double average = (hamming1 + hamming2) / 2.0;
+        return average / keysize;
+    }
 }

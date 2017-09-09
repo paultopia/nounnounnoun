@@ -49,9 +49,13 @@ public class SetOne{
     }
 
     public static void cryptopals6() {
-        Stringform first = new Stringform("this is a test");
-        Stringform second = new Stringform("wokka wokka!!!");
-        System.out.println(first.hammingDistance(second)); // part of the way there... 
+        Stringform ciphertext = new Stringform(Lines.getString("/6.txt"));
+        for (int i = 2; i <= 40; i++){
+            System.out.print(Vigenerepwner.testKeysizeSimple(ciphertext, i));
+            System.out.print(" ");
+            System.out.print(Vigenerepwner.testKeysizeFancy(ciphertext, i));
+            System.out.print("\n");
+        }
     }
 }
 
