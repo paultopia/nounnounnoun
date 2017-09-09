@@ -47,5 +47,11 @@ public class SetOne{
         Stringform cyphertext = vtext.xor(key);
         System.out.println(cyphertext.getHex());
     }
+
+    public static void cryptopals6() {
+        Stringform first = new Stringform("this is a test");
+        Stringform second = new Stringform("wokka wokka!!!");
+        System.out.println(first.hammingDistance(second)); // part of the way there... 
+    }
 }
 

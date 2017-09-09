@@ -7,5 +7,6 @@ public class EntryPoint{
         SetOne.cryptopals3();
         SetOne.cryptopals4();
         SetOne.cryptopals5();
+        SetOne.cryptopals6();
     }
 }

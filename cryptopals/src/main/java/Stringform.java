@@ -63,6 +63,23 @@ public class Stringform {
     public String seeBytes(){
         return Arrays.toString(bytes);
     }
+
+    public String seeBinaryBytes(){
+        int size = bytes.length;
+        String[] result = new String[size];
+        for (int i = 0; i < size; i++){
+            result[i] = Integer.toBinaryString((int)bytes[i]);
+        }
+        return Arrays.toString(result);
+    }
+
+    public int countSetBits(){
+        int result = 0;
+        for (int i = 0; i < bytes.length; i++){
+            result += Integer.bitCount((int)bytes[i]);
+        }
+        return result;
+    }
 	
 	private Stringform unevenXOR(byte[] other_bytes){ // assumes I want to rotate shorter string around to xor longer one, NOT discard unused bits of longer one (which roughly corresponds to the idea that the plaintext will always be longer than the key).  If this assumption becomes false then I'll have to rewrite this, or perhaps just change what gets called from the public xor method below.
 		byte[] longer;
@@ -110,4 +127,9 @@ public class Stringform {
         }
         return new Stringform(result);
 	}
+
+    public int hammingDistance(Stringform other){
+        Stringform diff = xor(other);
+        return diff.countSetBits();
+    }
 }
