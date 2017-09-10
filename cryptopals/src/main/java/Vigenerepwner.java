@@ -22,4 +22,29 @@ public class Vigenerepwner {
         double average = (hamming1 + hamming2) / 2.0;
         return average / keysize;
     }
+
+    public static int[] findBestKeysize(Stringform ciphertext){
+        double currentSimpleScore;
+        double currentFancyScore;
+        double bestSimpleScore = Double.MAX_VALUE;
+        double bestFancyScore = Double.MAX_VALUE;
+        int bestSimpleKeySize = 0;
+        int bestFancyKeySize = 0;
+        for (int i = 2; i <= 40; i++){
+            currentSimpleScore = testKeysizeSimple(ciphertext, i);
+            currentFancyScore = testKeysizeFancy(ciphertext, i);
+            if (currentSimpleScore < bestSimpleScore){
+                bestSimpleScore = currentSimpleScore;
+                bestSimpleKeySize = i;
+            }
+            if (currentFancyScore < bestFancyScore){
+                bestFancyScore = currentFancyScore;
+                bestFancyKeySize = i;
+            }
+            if (bestFancyKeySize == bestSimpleKeySize){
+                return new int[]{bestFancyKeySize};
+            }
+        }
+            return new int[]{bestFancyKeySize, bestSimpleKeySize};
+    }
 }
