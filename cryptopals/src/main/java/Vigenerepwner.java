@@ -23,6 +23,29 @@ public class Vigenerepwner {
         return average / keysize;
     }
 
+    // untested.  may be full of off-by-one errors.  step 5 of challenge 6.
+    public static Stringform[][] partition(Stringform ciphertext, int keysize){
+        int numElements;
+        byte[] bytes = ciphertext.getBytes();
+        int size = bytes.length;
+        if (size % keysize == 0){
+            numElements = size / keysize;
+        } else {
+            numElements = (size / keysize) + 1;
+        }
+        Stringform[][] result = new Stringform[numElements][];
+        byte[] innerarray;
+        for (int i = 0; i < numElements; i++){
+            if (i != (numElements - 1)){
+                innerarray = Arrays.copyOfRange(bytes, keysize * i, keysize * (i + 1));
+            } else {
+                innerarray =  Arrays.copyOfRange(bytes, keysize * i, size);
+            }
+            result[i] = new Stringform(innerarray);
+        }
+        return result;
+    }
+
     public static int[] findBestKeysize(Stringform ciphertext){
         double currentSimpleScore;
         double currentFancyScore;
