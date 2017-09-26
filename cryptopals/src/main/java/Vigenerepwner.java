@@ -24,7 +24,7 @@ public class Vigenerepwner {
     }
 
     // untested.  may be full of off-by-one errors.  step 5 of challenge 6.
-    public static Stringform[][] partition(Stringform ciphertext, int keysize){
+    public static Stringform[] partition(Stringform ciphertext, int keysize){
         int numElements;
         byte[] bytes = ciphertext.getBytes();
         int size = bytes.length;
@@ -33,7 +33,7 @@ public class Vigenerepwner {
         } else {
             numElements = (size / keysize) + 1;
         }
-        Stringform[][] result = new Stringform[numElements][];
+        Stringform[] result = new Stringform[numElements];
         byte[] innerarray;
         for (int i = 0; i < numElements; i++){
             if (i != (numElements - 1)){

@@ -50,9 +50,11 @@ public class SetOne{
 
     public static void cryptopals6() {
         Stringform ciphertext = new Stringform(Lines.getString("/6.txt"));
-        int[] bestints = Vigenerepwner.findBestKeysize(ciphertext);
-        for (int i : bestints){
-            System.out.println(i);
+        int partitionsize = 2;
+        Stringform[] partitions = Vigenerepwner.partition(ciphertext, 2);
+        System.out.println(ciphertext.seeBytes());
+        for (Stringform sf : partitions){
+            System.out.println(sf.seeBytes());
         }
     }
 }
