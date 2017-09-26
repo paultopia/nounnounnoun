@@ -107,4 +107,9 @@ public class Vigenerepwner {
         }
         return result;
     }
+
+    public static Stringform pwn(Stringform ciphertext){
+        Stringform key = new Stringform(getBestKeys(ciphertext));
+        return ciphertext.xor(key);
+    }
 }

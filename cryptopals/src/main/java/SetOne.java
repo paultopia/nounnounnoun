@@ -51,8 +51,8 @@ public class SetOne{
 
     public static void cryptopals6() {
         Stringform ciphertext = new Stringform(Lines.getString("/6.txt"));
-        byte[] outarray = Vigenerepwner.getBestKeys(ciphertext);
-        System.out.println(Arrays.toString(outarray));
+        Stringform cleartext = Vigenerepwner.pwn(ciphertext);
+        System.out.println(cleartext.getText());
     }
 }
 
