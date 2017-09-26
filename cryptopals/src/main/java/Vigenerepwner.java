@@ -93,4 +93,18 @@ public class Vigenerepwner {
         }
         return result;
     }
+
+    public static int[] getBestKeys(Stringform ciphertext){
+        int partitionsize = findBestKeysize(ciphertext)[0]; // only because I know from prior experiments that this yields a length 1 list.
+        Stringform[] partitions = partition(ciphertext, 2);
+        Stringform[] transposed = transpose(partitions);
+        int[] result = new int[transposed.length];
+        int currentanswer;
+        Scorer scorer = new Scorer(" eothasinrdluymwfgcbpkvjqxz");
+        for (int i = 0; i < transposed.length; i++){
+            currentanswer = scorer.calculateBestKey(transposed[i]);
+            result[i] = currentanswer;
+        }
+        return result;
+    }
 }

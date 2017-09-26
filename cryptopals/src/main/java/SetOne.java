@@ -1,5 +1,6 @@
 package cryptopals;
 import java.util.List;
+import java.util.Arrays;
 
 public class SetOne{
 
@@ -50,17 +51,19 @@ public class SetOne{
 
     public static void cryptopals6() {
         Stringform ciphertext = new Stringform(Lines.getString("/6.txt"));
-        int partitionsize = 2;
-        Stringform[] partitions = Vigenerepwner.partition(ciphertext, 2);
-        System.out.println("PARTITIONED:");
-        for (Stringform sf : partitions){
-            System.out.println(sf.seeBytes());
-        }
-        System.out.println("TRANSPOSED:");
-        Stringform[] transposed = Vigenerepwner.transpose(partitions);
-        for (Stringform sf : transposed){
-            System.out.println(sf.seeBytes());
-        }
+        // int partitionsize = 2;
+        // Stringform[] partitions = Vigenerepwner.partition(ciphertext, 2);
+        // System.out.println("PARTITIONED:");
+        // for (Stringform sf : partitions){
+        //     System.out.println(sf.seeBytes());
+        // }
+        // System.out.println("TRANSPOSED:");
+        // Stringform[] transposed = Vigenerepwner.transpose(partitions);
+        // for (Stringform sf : transposed){
+        //     System.out.println(sf.seeBytes());
+        // }
+        int[] outarray = Vigenerepwner.getBestKeys(ciphertext);
+        System.out.println(Arrays.toString(outarray));
     }
 }
 
