@@ -52,8 +52,13 @@ public class SetOne{
         Stringform ciphertext = new Stringform(Lines.getString("/6.txt"));
         int partitionsize = 2;
         Stringform[] partitions = Vigenerepwner.partition(ciphertext, 2);
-        System.out.println(ciphertext.seeBytes());
+        System.out.println("PARTITIONED:");
         for (Stringform sf : partitions){
+            System.out.println(sf.seeBytes());
+        }
+        System.out.println("TRANSPOSED:");
+        Stringform[] transposed = Vigenerepwner.transpose(partitions);
+        for (Stringform sf : transposed){
             System.out.println(sf.seeBytes());
         }
     }

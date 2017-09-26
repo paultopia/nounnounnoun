@@ -23,29 +23,6 @@ public class Vigenerepwner {
         return average / keysize;
     }
 
-    // untested.  may be full of off-by-one errors.  step 5 of challenge 6.
-    public static Stringform[] partition(Stringform ciphertext, int keysize){
-        int numElements;
-        byte[] bytes = ciphertext.getBytes();
-        int size = bytes.length;
-        if (size % keysize == 0){
-            numElements = size / keysize;
-        } else {
-            numElements = (size / keysize) + 1;
-        }
-        Stringform[] result = new Stringform[numElements];
-        byte[] innerarray;
-        for (int i = 0; i < numElements; i++){
-            if (i != (numElements - 1)){
-                innerarray = Arrays.copyOfRange(bytes, keysize * i, keysize * (i + 1));
-            } else {
-                innerarray =  Arrays.copyOfRange(bytes, keysize * i, size);
-            }
-            result[i] = new Stringform(innerarray);
-        }
-        return result;
-    }
-
     public static int[] findBestKeysize(Stringform ciphertext){
         double currentSimpleScore;
         double currentFancyScore;
@@ -69,5 +46,51 @@ public class Vigenerepwner {
             }
         }
             return new int[]{bestFancyKeySize, bestSimpleKeySize};
+    }
+
+    public static Stringform[] partition(Stringform ciphertext, int keysize){
+        int numElements;
+        byte[] bytes = ciphertext.getBytes();
+        int size = bytes.length;
+        if (size % keysize == 0){
+            numElements = size / keysize;
+        } else {
+            numElements = (size / keysize) + 1;
+        }
+        Stringform[] result = new Stringform[numElements];
+        byte[] innerarray;
+        for (int i = 0; i < numElements; i++){
+            if (i != (numElements - 1)){
+                innerarray = Arrays.copyOfRange(bytes, keysize * i, keysize * (i + 1));
+            } else {
+                innerarray =  Arrays.copyOfRange(bytes, keysize * i, size);
+            }
+            result[i] = new Stringform(innerarray);
+        }
+        return result;
+    }
+
+    /* assumes original array of stringforms are all of equal length.
+
+       This assumption may be false (depends on implementation of partition method above---right now I think it zero pads, or maybe null-pads?  whatever Arrays.copyOfRange does.
+
+       It so happens, however, that for the cryptopals challenge that this is written for it doesn't matter, since it's even-numbered and the best keysize by early implementation is 2, so the array will divide evenly.
+
+       But if I were trying to use this for something else I'd really need to fix this.)
+
+       also assumes away all kinds of other edge cases, like zero length etc.
+     */
+    public static Stringform[] transpose(Stringform[] original){
+        int resultlen = original[0].getBytes().length;
+        int itemlen = original.length;
+        Stringform[] result = new Stringform[resultlen];
+        for (int i = 0; i < resultlen; i++){
+            byte[] thisItem = new byte[itemlen];
+            for (int j = 0; j < itemlen; j++){
+                thisItem[j] = original[j].getBytes()[i];
+            }
+            result[i] = new Stringform(thisItem);
+        }
+        return result;
     }
 }
