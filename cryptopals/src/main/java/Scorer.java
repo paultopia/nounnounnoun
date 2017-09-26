@@ -47,7 +47,7 @@ public class Scorer{
 
     // this is a ton of repeated code, but I'm just trying to push through challenge 6, can refactor later if I want.
 
-    public int calculateBestKey(Stringform cyphertext){
+    public byte calculateBestKey(Stringform cyphertext){
         Double max_score = 0.0;
         int best_key = 0;
         String current_text = "";
@@ -60,6 +60,6 @@ public class Scorer{
                 best_key = i;
             }
         }
-        return best_key;
+        return (byte)best_key;
     }
 }
