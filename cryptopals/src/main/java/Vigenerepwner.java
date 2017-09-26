@@ -41,9 +41,11 @@ public class Vigenerepwner {
                 bestFancyScore = currentFancyScore;
                 bestFancyKeySize = i;
             }
-            if (bestFancyKeySize == bestSimpleKeySize){
-                return new int[]{bestFancyKeySize};
-            }
+        }
+        System.out.println("Simple answer: " + bestSimpleKeySize);
+        System.out.println("Fancy answer: " + bestFancyKeySize);
+        if (bestFancyKeySize == bestSimpleKeySize){
+            return new int[]{bestFancyKeySize};
         }
             return new int[]{bestFancyKeySize, bestSimpleKeySize};
     }
