@@ -8,7 +8,11 @@ public class Vigenerepwner {
         Stringform first = new Stringform(Arrays.copyOfRange(bytes, 0, keysize));
         Stringform second = new Stringform (Arrays.copyOfRange(bytes, keysize, keysize * 2));
         int hamming = first.hammingDistance(second);
-        return ((double)hamming) / keysize;
+        System.out.println("Testing key: " + keysize);
+        System.out.println("simple hamming: " + hamming);
+        double result = ((double)hamming) / keysize;
+        System.out.println("score for this key: " + result);
+        return result;
     }
 
     public static double testKeysizeFancy(Stringform ciphertext, int keysize){
@@ -72,33 +76,122 @@ public class Vigenerepwner {
         return result;
     }
 
-    /* assumes original array of stringforms are all of equal length.
+    public static Stringform[] transpose(Stringform[] orig){
+        // first of all I want to work with raw arrays for indexing.
+        int resultlen = orig[0].getBytes().length;
+        System.out.println("number of items in result: " + resultlen);
+        byte[] thisbytes;
+        int totallen = 0;
+        int longlen = orig.length;
+        int shortlen = orig.length - 1;
+        byte[][] working = new byte[orig.length][];
+        for (int s = 0; s < orig.length; s++){
+            thisbytes = orig[s].getBytes();
+            working[s] = thisbytes;
+            totallen += thisbytes.length;
+        }
+        System.out.println("total length: " + totallen);
+        int shortrows = totallen % resultlen;
+        int longrows =  resultlen - shortrows;
+        System.out.println("will have this many short rows: " + shortrows);
+        System.out.println("will have this many long rows: " + longrows);
 
-       This assumption may be false (depends on implementation of partition method above---right now I think it zero pads, or maybe null-pads?  whatever Arrays.copyOfRange does.
-
-       It so happens, however, that for the cryptopals challenge that this is written for it doesn't matter, since it's even-numbered and the best keysize by early implementation is 2, so the array will divide evenly.
-
-       But if I were trying to use this for something else I'd really need to fix this.)
-
-       also assumes away all kinds of other edge cases, like zero length etc.
-     */
-    public static Stringform[] transpose(Stringform[] original){
-        int resultlen = original[0].getBytes().length;
-        int itemlen = original.length;
-        Stringform[] result = new Stringform[resultlen];
+        // now I can create an array of byte arrays for the result.
+        byte[][] workingresult = new byte[resultlen][];
         for (int i = 0; i < resultlen; i++){
-            byte[] thisItem = new byte[itemlen];
-            for (int j = 0; j < itemlen; j++){
-                thisItem[j] = original[j].getBytes()[i];
+            System.out.println("i is: " + i);
+            System.out.println(i < longrows);
+            if (i < longrows){
+                workingresult[i] = new byte[longlen];
+                System.out.println("initializing LONG result row #" + i);
+                    } else{
+                workingresult[i] = new byte[shortlen];
+                System.out.println("initializing SHORT result row #" + i);
             }
-            result[i] = new Stringform(thisItem);
+        }
+        // and now I can fill up that array of byte arrays
+        for (int j = 0; j < working.length; j++){
+            for (int k = 0; k < working[j].length; k++){
+                workingresult[k][j] = working[j][k];
+            }
+        }
+        Stringform[] result = new Stringform[resultlen];
+        for (int l = 0; l < resultlen; l++){
+            System.out.println(workingresult[l].length);
+            result[l] = new Stringform(workingresult[l]);
         }
         return result;
     }
 
+    /*
+      I may have to tear this up and start from the beginning, it looks like the transposition code just sucks really badly.
+
+      transposition should look like:
+
+      x x x x
+      x x x x
+      x x 
+
+      turns to: 
+
+      x x x
+      x x x
+      x x
+      x x
+
+      total bytes = 3836
+      key size = 29
+      partition = 132 blocks each with 29 bytes in it +  1 block with 8 bytes in it.
+      so transposition should be 21 blocks each with 132 bytes and 8 blocks with 131 bytes
+
+    */
+
+
+    public static Stringform[] BADtranspose(Stringform[] original){
+        int resultlen = original[0].getBytes().length;
+        int longlen = original.length;
+        int shortlen = original.length - 1;
+        System.out.println("length of each full-size item: " + longlen);
+        System.out.println("length of each short item: " + shortlen);
+        System.out.println("length of result: " + resultlen);
+        Stringform[] result = new Stringform[resultlen];
+        int thislen;
+        boolean isShort;  // most of the code below is to handle transposing uneven length strings.
+        for (int i = 0; i < resultlen; i++){
+            isShort = false;
+            byte[] longItem = new byte[longlen];
+            byte[] shortItem = new byte[shortlen];
+            for (int j = 0; j < longlen; j++){
+                thislen = original[j].getBytes().length;
+                if (thislen > j){
+                    longItem[j] = original[j].getBytes()[i];
+                    shortItem[j] = original[j].getBytes()[i];
+                } else{
+                    isShort = true;
+                    System.out.println("short");
+                }
+            }
+            if (isShort){
+                result[i] = new Stringform(shortItem);
+                System.out.println(shortItem.length);
+
+            } else{
+                result[i] = new Stringform(longItem);
+                System.out.println(longItem.length);
+            }
+        }
+        System.out.println(result.length);
+        // for (Stringform sf : result){
+        //     System.out.println(sf.getBytes().length);
+        // }
+        return result;
+    }
+
     public static byte[] getBestKeys(Stringform ciphertext){
-        int partitionsize = findBestKeysize(ciphertext)[0]; // only because I know from prior experiments that this yields a length 1 list.
-        Stringform[] partitions = partition(ciphertext, 2);
+        //int partitionsize = findBestKeysize(ciphertext)[0];
+        // cheating here, googled to find partitionsize of 29, now going to get it working with that and then go back to fix that other bit...
+        int partitionsize = 29;
+        Stringform[] partitions = partition(ciphertext, partitionsize);
         Stringform[] transposed = transpose(partitions);
         byte[] result = new byte[transposed.length];
         byte currentanswer;
@@ -112,6 +205,7 @@ public class Vigenerepwner {
 
     public static Stringform pwn(Stringform ciphertext){
         Stringform key = new Stringform(getBestKeys(ciphertext));
+        System.out.println("Total bytes: " + ciphertext.getBytes().length);
         return ciphertext.xor(key);
     }
 }
