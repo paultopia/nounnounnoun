@@ -52,8 +52,11 @@ public class SetOne{
 
     public static void cryptopals6() {
         Stringform ciphertext = new Stringform(Lines.getString("/6.txt"));
-        Stringform cleartext = Vigenerepwner.pwn(ciphertext);
-        System.out.println(cleartext.getText());
+        System.out.println(ciphertext.getText());
+        Stringform key = new Stringform("Terminator X: Bring the noise");
+        Stringform cleartext = ciphertext.xor(key);
+        //Stringform cleartext = Vigenerepwner.pwn(ciphertext);
+        //System.out.println(cleartext.getText());
     }
 }
 
