@@ -84,25 +84,19 @@ public class Vigenerepwner {
         for (byte[] ba : working){
             totallen += ba.length;
         }
-        System.out.println("total length: " + totallen);
+
         // number of short rows = the number of the shortfall between the length of the last item (the broken partition) and the length of the first item (resultlen)
         int lenOfShortItem = working[working.length - 1].length;
         int shortrows = resultlen - lenOfShortItem;
         int longrows =  resultlen - shortrows;
-        System.out.println("will have this many short rows: " + shortrows);
-        System.out.println("will have this many long rows: " + longrows);
 
         // now I can create an array of byte arrays for the result.
         byte[][] workingresult = new byte[resultlen][];
         for (int i = 0; i < resultlen; i++){
-            System.out.println("i is: " + i);
-            System.out.println(i < longrows);
             if (i < longrows){
                 workingresult[i] = new byte[longlen];
-                System.out.println("initializing LONG result row #" + i);
                     } else{
                 workingresult[i] = new byte[shortlen];
-                System.out.println("initializing SHORT result row #" + i);
             }
         }
         // and now I can fill up that array of byte arrays
@@ -111,17 +105,11 @@ public class Vigenerepwner {
                 workingresult[k][j] = working[j][k];
             }
         }
-        // let's check the length.
-        for (byte[] bb : workingresult){
-            System.out.println(bb.length);
-        }
         return workingresult;
     }
 
     public static Stringform[] transpose(Stringform[] orig){
-        // first of all I want to work with raw arrays for indexing.
         int resultlen = orig[0].getBytes().length;
-        System.out.println("number of items in result: " + resultlen);
         byte[][] working = new byte[orig.length][];
         byte[] thisbytes;
         for (int s = 0; s < orig.length; s++){
@@ -131,73 +119,8 @@ public class Vigenerepwner {
         byte[][] workingresult = transposeHelper(working);
         Stringform[] result = new Stringform[resultlen];
         for (int l = 0; l < resultlen; l++){
-            System.out.println(workingresult[l].length);
             result[l] = new Stringform(workingresult[l]);
         }
-        return result;
-    }
-
-    /*
-      I may have to tear this up and start from the beginning, it looks like the transposition code just sucks really badly.
-
-      transposition should look like:
-
-      x x x x
-      x x x x
-      x x 
-
-      turns to: 
-
-      x x x
-      x x x
-      x x
-      x x
-
-      total bytes = 3836
-      key size = 29
-      partition = 132 blocks each with 29 bytes in it +  1 block with 8 bytes in it.
-      so transposition should be 21 blocks each with 132 bytes and 8 blocks with 131 bytes
-
-    */
-
-
-    public static Stringform[] BADtranspose(Stringform[] original){
-        int resultlen = original[0].getBytes().length;
-        int longlen = original.length;
-        int shortlen = original.length - 1;
-        System.out.println("length of each full-size item: " + longlen);
-        System.out.println("length of each short item: " + shortlen);
-        System.out.println("length of result: " + resultlen);
-        Stringform[] result = new Stringform[resultlen];
-        int thislen;
-        boolean isShort;  // most of the code below is to handle transposing uneven length strings.
-        for (int i = 0; i < resultlen; i++){
-            isShort = false;
-            byte[] longItem = new byte[longlen];
-            byte[] shortItem = new byte[shortlen];
-            for (int j = 0; j < longlen; j++){
-                thislen = original[j].getBytes().length;
-                if (thislen > j){
-                    longItem[j] = original[j].getBytes()[i];
-                    shortItem[j] = original[j].getBytes()[i];
-                } else{
-                    isShort = true;
-                    System.out.println("short");
-                }
-            }
-            if (isShort){
-                result[i] = new Stringform(shortItem);
-                System.out.println(shortItem.length);
-
-            } else{
-                result[i] = new Stringform(longItem);
-                System.out.println(longItem.length);
-            }
-        }
-        System.out.println(result.length);
-        // for (Stringform sf : result){
-        //     System.out.println(sf.getBytes().length);
-        // }
         return result;
     }
 
