@@ -34,24 +34,29 @@ public class Vigenerepwner {
         double bestFancyScore = Double.MAX_VALUE;
         int bestSimpleKeySize = 0;
         int bestFancyKeySize = 0;
+        int secondBestSimpleKeySize = 0;
+        int secondBestFancyKeySize = 0;
+        int thirdBestSimpleKeySize = 0;
+        int thirdBestFancyKeySize = 0;
         for (int i = 2; i <= 40; i++){
             currentSimpleScore = testKeysizeSimple(ciphertext, i);
             currentFancyScore = testKeysizeFancy(ciphertext, i);
             if (currentSimpleScore < bestSimpleScore){
                 bestSimpleScore = currentSimpleScore;
+                thirdBestSimpleKeySize = secondBestSimpleKeySize;
+                secondBestSimpleKeySize = bestSimpleKeySize;
                 bestSimpleKeySize = i;
             }
             if (currentFancyScore < bestFancyScore){
                 bestFancyScore = currentFancyScore;
+                thirdBestFancyKeySize = secondBestFancyKeySize;
+                secondBestFancyKeySize = bestFancyKeySize;
                 bestFancyKeySize = i;
             }
         }
         System.out.println("Simple answer: " + bestSimpleKeySize);
         System.out.println("Fancy answer: " + bestFancyKeySize);
-        if (bestFancyKeySize == bestSimpleKeySize){
-            return new int[]{bestFancyKeySize};
-        }
-            return new int[]{bestFancyKeySize, bestSimpleKeySize};
+        return new int[]{bestFancyKeySize, bestSimpleKeySize, secondBestFancyKeySize, secondBestSimpleKeySize, thirdBestFancyKeySize, thirdBestSimpleKeySize};
     }
 
     public static Stringform[] partition(Stringform ciphertext, int keysize){
@@ -125,7 +130,7 @@ public class Vigenerepwner {
     }
 
     public static byte[] getBestKeys(Stringform ciphertext){
-        System.out.println(findBestKeysize(ciphertext)[0]);
+        System.out.println(Arrays.toString(findBestKeysize(ciphertext)));
         // cheating here, googled to find partitionsize of 29, now going to get it working with that and then go back to fix that other bit...
         int partitionsize = 29;
         Stringform[] partitions = partition(ciphertext, partitionsize);
