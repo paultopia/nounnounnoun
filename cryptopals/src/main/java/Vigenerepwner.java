@@ -85,8 +85,8 @@ public class Vigenerepwner {
             totallen += ba.length;
         }
         System.out.println("total length: " + totallen);
-        int shortrows = totallen % resultlen;
-        int longrows =  resultlen - shortrows;
+        int longrows =  totallen / resultlen; // integer division should nicely capture the number of long rows I want.
+        int shortrows =  resultlen - longrows;
         System.out.println("will have this many short rows: " + shortrows);
         System.out.println("will have this many long rows: " + longrows);
 
