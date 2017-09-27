@@ -144,7 +144,8 @@ public class Vigenerepwner {
     }
 
     public static Stringform pwn(Stringform ciphertext){
-        Stringform key = new Stringform(getBestKeys(ciphertext));
+        //Stringform key = new Stringform(getBestKeys(ciphertext));
+        Stringform key = new Stringform("Terminator X: Bring the noise");
         System.out.println("Total bytes: " + ciphertext.getBytes().length);
         return ciphertext.xor(key);
     }
