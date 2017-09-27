@@ -1,5 +1,6 @@
 package cryptopals;
 import java.util.Arrays;
+import java.util.*;
 
 public class Vigenerepwner {
 
@@ -28,35 +29,51 @@ public class Vigenerepwner {
     }
 
     public static int[] findBestKeysize(Stringform ciphertext){
-        double currentSimpleScore;
-        double currentFancyScore;
-        double bestSimpleScore = Double.MAX_VALUE;
-        double bestFancyScore = Double.MAX_VALUE;
-        int bestSimpleKeySize = 0;
-        int bestFancyKeySize = 0;
-        int secondBestSimpleKeySize = 0;
-        int secondBestFancyKeySize = 0;
-        int thirdBestSimpleKeySize = 0;
-        int thirdBestFancyKeySize = 0;
-        for (int i = 2; i <= 40; i++){
-            currentSimpleScore = testKeysizeSimple(ciphertext, i);
-            currentFancyScore = testKeysizeFancy(ciphertext, i);
-            if (currentSimpleScore < bestSimpleScore){
-                bestSimpleScore = currentSimpleScore;
-                thirdBestSimpleKeySize = secondBestSimpleKeySize;
-                secondBestSimpleKeySize = bestSimpleKeySize;
-                bestSimpleKeySize = i;
+        class SizeScorePairing implements Comparable<SizeScorePairing> {
+            double score = 0.0;
+            int keysize = 0;
+            SizeScorePairing(double sc, int ks){
+                score = sc;
+                keysize = ks;
             }
-            if (currentFancyScore < bestFancyScore){
-                bestFancyScore = currentFancyScore;
-                thirdBestFancyKeySize = secondBestFancyKeySize;
-                secondBestFancyKeySize = bestFancyKeySize;
-                bestFancyKeySize = i;
+            public int compareTo(SizeScorePairing other){
+                if (this.score - other.score > 0){
+                    return 1;
+                }
+                return -1;
             }
         }
-        System.out.println("Simple answer: " + bestSimpleKeySize);
-        System.out.println("Fancy answer: " + bestFancyKeySize);
-        return new int[]{bestFancyKeySize, bestSimpleKeySize, secondBestFancyKeySize, secondBestSimpleKeySize, thirdBestFancyKeySize, thirdBestSimpleKeySize};
+        SizeScorePairing[] scores = new SizeScorePairing[78]; // all the magic numbers aieee
+        double simpleScore = 0;
+        double fancyScore = 0;
+        for (int i = 2; i <= 40; i++){
+            simpleScore = testKeysizeSimple(ciphertext, i);
+            fancyScore = testKeysizeFancy(ciphertext, i);
+            scores[i - 2] = new SizeScorePairing(simpleScore, i);
+            scores[77 - (i - 2)] = new SizeScorePairing(fancyScore, i);
+        }
+        Arrays.sort(scores);
+        for (SizeScorePairing ssp : scores){
+            System.out.println(ssp.keysize);
+            System.out.println(ssp.score);
+        }
+        int[] result = new int[20];
+        int targetindex = 0;
+        for (int j = 0; j < 20; j++){
+            result[j] = scores[j].keysize;
+        }
+        Set<Integer> set = new HashSet<Integer>();
+        for (int num : result) {
+            set.add(num);
+        }
+
+        Integer[] almostresult = set.toArray(new Integer[set.size()]);
+
+        int[] finalresult = new int[almostresult.length];
+        for (int k = 0; k < almostresult.length; k++){
+            finalresult[k] = almostresult[k].intValue();
+        }
+        return finalresult;
     }
 
     public static Stringform[] partition(Stringform ciphertext, int keysize){
