@@ -19,6 +19,7 @@ public class SetOne{
         Stringform hex = new Stringform("1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736", "hex");
         Scorer scorer = new Scorer(" eothasinrdluymwfgcbpkvjqxz");
         System.out.println(scorer.calculateBestText(hex));
+        System.out.println(scorer.calculateBestKey(hex));
     }
 
     public static void cryptopals4() {
@@ -53,11 +54,6 @@ public class SetOne{
         Stringform ciphertext = new Stringform(Lines.getString("/6.txt"));
         Stringform cleartext = Vigenerepwner.pwn(ciphertext);
         System.out.println(cleartext.getText());
-        byte[][] testarray = {{1, 2, 3, 4, 99, 99, 99}, {5, 6, 7, 8, 99, 99, 99}, {9, 10}};
-        byte[][] testresult = Vigenerepwner.transpose(testarray);
-        for (byte[] ba : testresult){
-            System.out.println(Arrays.toString(ba));
-        }
     }
 }
 
