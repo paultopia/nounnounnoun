@@ -125,7 +125,7 @@ public class Vigenerepwner {
     }
 
     public static byte[] getBestKeys(Stringform ciphertext){
-        //int partitionsize = findBestKeysize(ciphertext)[0];
+        System.out.println(findBestKeysize(ciphertext)[0]);
         // cheating here, googled to find partitionsize of 29, now going to get it working with that and then go back to fix that other bit...
         int partitionsize = 29;
         Stringform[] partitions = partition(ciphertext, partitionsize);
@@ -144,8 +144,8 @@ public class Vigenerepwner {
     }
 
     public static Stringform pwn(Stringform ciphertext){
-        //Stringform key = new Stringform(getBestKeys(ciphertext));
-        Stringform key = new Stringform("Terminator X: Bring the noise");
+        Stringform key = new Stringform(getBestKeys(ciphertext));
+        //Stringform key = new Stringform("Terminator X: Bring the noise");
         System.out.println("Total bytes: " + ciphertext.getBytes().length);
         return ciphertext.xor(key);
     }
