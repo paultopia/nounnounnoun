@@ -109,6 +109,10 @@ public class Vigenerepwner {
                 workingresult[k][j] = working[j][k];
             }
         }
+        // let's check the length.
+        for (byte[] bb : workingresult){
+            System.out.println(bb.length);
+        }
         return workingresult;
     }
 
