@@ -76,19 +76,13 @@ public class Vigenerepwner {
         return result;
     }
 
-    public static Stringform[] transpose(Stringform[] orig){
-        // first of all I want to work with raw arrays for indexing.
-        int resultlen = orig[0].getBytes().length;
-        System.out.println("number of items in result: " + resultlen);
-        byte[] thisbytes;
+    public static byte[][] transposeHelper(byte[][] working){
+        int resultlen = working[0].length;
         int totallen = 0;
-        int longlen = orig.length;
-        int shortlen = orig.length - 1;
-        byte[][] working = new byte[orig.length][];
-        for (int s = 0; s < orig.length; s++){
-            thisbytes = orig[s].getBytes();
-            working[s] = thisbytes;
-            totallen += thisbytes.length;
+        int longlen = working.length;
+        int shortlen = longlen - 1;
+        for (byte[] ba : working){
+            totallen += ba.length;
         }
         System.out.println("total length: " + totallen);
         int shortrows = totallen % resultlen;
@@ -115,6 +109,20 @@ public class Vigenerepwner {
                 workingresult[k][j] = working[j][k];
             }
         }
+        return workingresult;
+    }
+
+    public static Stringform[] transpose(Stringform[] orig){
+        // first of all I want to work with raw arrays for indexing.
+        int resultlen = orig[0].getBytes().length;
+        System.out.println("number of items in result: " + resultlen);
+        byte[][] working = new byte[orig.length][];
+        byte[] thisbytes;
+        for (int s = 0; s < orig.length; s++){
+            thisbytes = orig[s].getBytes();
+            working[s] = thisbytes;
+        }
+        byte[][] workingresult = transposeHelper(working);
         Stringform[] result = new Stringform[resultlen];
         for (int l = 0; l < resultlen; l++){
             System.out.println(workingresult[l].length);
