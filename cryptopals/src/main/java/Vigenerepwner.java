@@ -9,10 +9,7 @@ public class Vigenerepwner {
         Stringform first = new Stringform(Arrays.copyOfRange(bytes, 0, keysize));
         Stringform second = new Stringform (Arrays.copyOfRange(bytes, keysize, keysize * 2));
         int hamming = first.hammingDistance(second);
-        System.out.println("Testing key: " + keysize);
-        System.out.println("simple hamming: " + hamming);
         double result = ((double)hamming) / keysize;
-        System.out.println("score for this key: " + result);
         return result;
     }
 
@@ -53,10 +50,6 @@ public class Vigenerepwner {
             scores[77 - (i - 2)] = new SizeScorePairing(fancyScore, i);
         }
         Arrays.sort(scores);
-        for (SizeScorePairing ssp : scores){
-            System.out.println(ssp.keysize);
-            System.out.println(ssp.score);
-        }
         int[] result = new int[20];
         int targetindex = 0;
         for (int j = 0; j < 20; j++){
@@ -146,10 +139,7 @@ public class Vigenerepwner {
         return result;
     }
 
-    public static byte[] getBestKeys(Stringform ciphertext){
-        System.out.println(Arrays.toString(findBestKeysize(ciphertext)));
-        // cheating here, googled to find partitionsize of 29, now going to get it working with that and then go back to fix that other bit...
-        int partitionsize = 29;
+    public static byte[] getBestKeys(Stringform ciphertext, int partitionsize){
         Stringform[] partitions = partition(ciphertext, partitionsize);
         Stringform[] transposed = transpose(partitions);
         byte[] result = new byte[transposed.length];
@@ -159,16 +149,34 @@ public class Vigenerepwner {
             currentanswer = scorer.calculateBestKey(transposed[i]);
             result[i] = currentanswer;
         }
-        System.out.println("KEY LENGTH: " + result.length);
-        System.out.println("Best key: " + Arrays.toString(result));
-        System.out.println("Text key: " + new String(result));
         return result;
     }
 
+    public static Stringform findBestText(Stringform ciphertext){
+        Double max_score = 0.0;
+        String best_text = "";
+        String current_text = "";
+        Double current_score = 0.0;
+        Stringform currentKey;
+        int[] keyoptions = findBestKeysize(ciphertext);
+        Scorer scorer = new Scorer(" eothasinrdluymwfgcbpkvjqxz");
+        for (int option: keyoptions){
+            currentKey = new Stringform(getBestKeys(ciphertext, option));
+            current_text = ciphertext.xor(currentKey).getText();
+            current_score = scorer.calculateScore(current_text);
+            if (current_score > max_score){
+                max_score = current_score;
+                best_text = current_text;
+            }
+        }
+        return new Stringform(best_text);
+    }
+
     public static Stringform pwn(Stringform ciphertext){
-        Stringform key = new Stringform(getBestKeys(ciphertext));
+        //Stringform key = new Stringform(getBestKeys(ciphertext, 29));
         //Stringform key = new Stringform("Terminator X: Bring the noise");
-        System.out.println("Total bytes: " + ciphertext.getBytes().length);
-        return ciphertext.xor(key);
+        //System.out.println("Total bytes: " + ciphertext.getBytes().length);
+        //return ciphertext.xor(key);
+        return findBestText(ciphertext);
     }
 }
