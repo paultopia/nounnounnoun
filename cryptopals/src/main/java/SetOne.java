@@ -50,11 +50,11 @@ public class SetOne{
     }
 
     public static void cryptopals6() {
-        // Stringform ciphertext = new Stringform(Lines.getString("/6.txt"));
-        // Stringform cleartext = Vigenerepwner.pwn(ciphertext);
-        // System.out.println(cleartext.getText());
+        Stringform ciphertext = new Stringform(Lines.getString("/6.txt"));
+        Stringform cleartext = Vigenerepwner.pwn(ciphertext);
+        System.out.println(cleartext.getText());
         byte[][] testarray = {{1, 2, 3, 4, 99, 99, 99}, {5, 6, 7, 8, 99, 99, 99}, {9, 10}};
-        byte[][] testresult = Vigenerepwner.transposeHelper(testarray);
+        byte[][] testresult = Vigenerepwner.transpose(testarray);
         for (byte[] ba : testresult){
             System.out.println(Arrays.toString(ba));
         }

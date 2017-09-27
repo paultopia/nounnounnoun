@@ -76,7 +76,7 @@ public class Vigenerepwner {
         return result;
     }
 
-    public static byte[][] transposeHelper(byte[][] working){
+    public static byte[][] transpose(byte[][] working){
         int resultlen = working[0].length;
         int totallen = 0;
         int longlen = working.length;
@@ -116,7 +116,7 @@ public class Vigenerepwner {
             thisbytes = orig[s].getBytes();
             working[s] = thisbytes;
         }
-        byte[][] workingresult = transposeHelper(working);
+        byte[][] workingresult = transpose(working);
         Stringform[] result = new Stringform[resultlen];
         for (int l = 0; l < resultlen; l++){
             result[l] = new Stringform(workingresult[l]);
@@ -137,6 +137,9 @@ public class Vigenerepwner {
             currentanswer = scorer.calculateBestKey(transposed[i]);
             result[i] = currentanswer;
         }
+        System.out.println("KEY LENGTH: " + result.length);
+        System.out.println("Best key: " + Arrays.toString(result));
+        System.out.println("Text key: " + new String(result));
         return result;
     }
 
