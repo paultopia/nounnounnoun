@@ -52,7 +52,7 @@ public class Scorer{
         int best_key = 0;
         String current_text = "";
         Double current_score = 0.0;
-        for (int i = 0; i < 128; i++){
+        for (int i = 0; i <= 255; i++){
             current_text = cyphertext.xor(i).getText();
             current_score = calculateScore(current_text);
             if (current_score > max_score){

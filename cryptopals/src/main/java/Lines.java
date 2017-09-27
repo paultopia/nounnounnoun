@@ -26,6 +26,7 @@ public class Lines{
         StringBuilder sb = new StringBuilder();
         for (String line : lines) {
             sb.append(line);
+            sb.append("\n");
         }
         return sb.toString();
     }

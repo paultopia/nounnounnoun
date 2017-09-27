@@ -56,7 +56,7 @@ public class SetOne{
         Stringform key = new Stringform("Terminator X: Bring the noise");
         Stringform cleartext = ciphertext.xor(key);
         //Stringform cleartext = Vigenerepwner.pwn(ciphertext);
-        //System.out.println(cleartext.getText());
+        System.out.println(cleartext.getText());
     }
 }
 
