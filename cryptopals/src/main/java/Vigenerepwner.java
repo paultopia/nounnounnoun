@@ -85,8 +85,10 @@ public class Vigenerepwner {
             totallen += ba.length;
         }
         System.out.println("total length: " + totallen);
-        int longrows =  totallen / resultlen; // integer division should nicely capture the number of long rows I want.
-        int shortrows =  resultlen - longrows;
+        // number of short rows = the number of the shortfall between the length of the last item (the broken partition) and the length of the first item (resultlen)
+        int lenOfShortItem = working[working.length - 1].length;
+        int shortrows = resultlen - lenOfShortItem;
+        int longrows =  resultlen - shortrows;
         System.out.println("will have this many short rows: " + shortrows);
         System.out.println("will have this many long rows: " + longrows);
 
