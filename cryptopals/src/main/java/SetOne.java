@@ -51,7 +51,7 @@ public class SetOne{
     }
 
     public static void cryptopals6() {
-        Stringform ciphertext = new Stringform(Lines.getString("/6.txt"));
+        Stringform ciphertext = new Stringform(Lines.getString("/6.txt"), "base64");
         System.out.println(ciphertext.getText());
         Stringform key = new Stringform("Terminator X: Bring the noise");
         Stringform cleartext = ciphertext.xor(key);
