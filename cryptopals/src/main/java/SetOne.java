@@ -55,5 +55,13 @@ public class SetOne{
         Stringform cleartext = Vigenerepwner.pwn(ciphertext);
         System.out.println(cleartext.getText());
     }
+
+    public static void cryptopals7() {
+        Stringform ciphertext = new Stringform(Lines.getString("/7.txt"), "base64");
+        Stringform key = new Stringform("YELLOW SUBMARINE");
+        Stringform cleartext = AESDecrypt.decrypt(ciphertext, key);
+        System.out.println(cleartext.getText());
+       
+    }
 }
 
